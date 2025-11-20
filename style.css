@@ -1,0 +1,271 @@
+@font-face {
+  font-family: 'my_display_st';
+  src: url('assets/my_display_st/My\ Display\ St\ Free\ for\ personal\ use.ttf');
+}
+
+:root {
+    --dial-rotation: -90deg; 
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0e0e0;
+    font-family: sans-serif;
+    overflow: hidden;
+    flex-direction: column; 
+}
+
+.author-footer {
+    margin-top: 55px;    
+    color: #555;          
+    font-size: 0.9rem;   
+    opacity: 0.8;
+    text-align: center;
+}
+
+.main-container {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.multimeter-body {
+    width: 350px;
+    background-color: #f5c600;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 0 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.screen-area {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.lcd-screen {
+    background-color: #c4d1c4;
+    height: 100px;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #222;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.lcd-screen.backlight {
+    background-color: #a4e6b3;
+    text-shadow: 0 0 5px #fff;
+}
+
+.hold-indicator {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #444;
+    visibility: hidden; 
+}
+.hold-indicator.active {
+    visibility: visible;
+}
+
+.main-display, .display-bg {
+    font-family: 'my_display_st', sans-serif; 
+    font-size: 3.5em;
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    bottom: 25px;
+    left: 15px;
+    line-height: 1.2;
+}
+
+.mode-display {
+    position: absolute;
+    bottom: 8px;
+    left: 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #444;
+}
+
+.buttons-area {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #666;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px #444;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+.btn:active {
+    box-shadow: 0 1px #333;
+    transform: translateY(3px);
+}
+
+.yellow-btn {
+    background-color: #e6a100;
+    box-shadow: 0 4px #b88100;
+    font-size: 1.5em;
+}
+
+#hold-btn.active {
+    background-color: #4c8bf5;
+    box-shadow: 0 4px #2a62bc;
+}
+
+.dial-area {
+    position: relative;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.dial {
+    width: 180px;
+    height: 180px;
+    background-color: #333;
+    border-radius: 50%;
+    border: 5px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: rotate(var(--dial-rotation));
+}
+
+.dial-handle {
+    width: 70px;
+    height: 18px;
+    background-color: #666;
+    border-radius: 9px;
+    transform: translateX(50%);
+    pointer-events: none;
+}
+
+.label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    margin-left: -40px;
+    height: 20px;
+    margin-top: -10px;
+    transform: rotate(var(--angle));
+    pointer-events: none;
+}
+
+.label > span {
+    display: block;
+    color: #333;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+    transform: translateY(-115px) rotate(calc(-1 * var(--angle)));
+}
+
+.jacks-area {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.jack-group {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.jack {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #222;
+    border: 4px solid #444;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+}
+
+.jack-red { background: radial-gradient(circle, #ff6b6b, #c44d4d); }
+.jack-black { background: radial-gradient(circle, #555, #222); }
+
+.circuit-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.schema-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+.schema-btn { padding: 10px 15px; border: 2px solid #ccc; background: #f0f0f0; border-radius: 5px; font-weight: bold; cursor: pointer; }
+.schema-btn.active { background: #f5c600; border-color: #e6a100; }
+.schema-btn:disabled { background: #e9e9e9; color: #999; cursor: not-allowed; }
+
+.circuit-board { position: relative; width: 500px; height: auto; }
+.circuit-board img { width: 100%; height: auto; display: block; }
+
+.probe-point { 
+    position: absolute; 
+    width: 24px; 
+    height: 24px; 
+    background: rgba(255, 255, 255, 0.5); 
+    border: 3px solid #555; 
+    border-radius: 50%; 
+    transform: translate(-50%, -50%); 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    z-index: 10;
+    display: none; 
+}
+
+.probe-point:hover { 
+    transform: translate(-50%, -50%) scale(1.2); 
+    background: #fff;
+}
+
+.probe-point.red-probe { background: #e74c3c; border-color: #c0392b; }
+.probe-point.black-probe { background: #34495e; border-color: #2c3e50; }
+
+.info-text {
+    margin-top: 20px;
+    max-width: 500px; 
+    width: 100%; 
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: #fffbe6;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    color: #856404;
+    text-align: center;
+    font-size: 0.9em;
+    display: none; 
+}

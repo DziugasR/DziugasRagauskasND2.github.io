@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtualus Multimetras Džiugas Ragauskas EF-24/2</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DSEG7+Classic:wght@400&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="main-container">
+        <!-- Multimetro dalis -->
+        <div class="multimeter-container">
+            <div class="multimeter-body">
+                <div class="screen-area">
+                    <div id="lcd-screen" class="lcd-screen">
+                        <span id="hold-indicator" class="hold-indicator">HOLD</span>
+                        <span id="main-display" class="main-display"></span>
+                        <span id="mode-display" class="mode-display"></span>
+                    </div>
+                </div>
+                <div class="buttons-area">
+                    <button id="backlight-btn" class="btn yellow-btn">💡</button>
+                    <button class="btn dummy-btn">MIN MAX</button>
+                    <button class="btn dummy-btn">RANGE</button>
+                    <button id="hold-btn" class="btn">HOLD</button>
+                    <button class="btn dummy-btn">PEAK MIN MAX</button>
+                    <button class="btn dummy-btn">Hz / %</button>
+                    <button class="btn dummy-btn">REL Δ</button>
+                    <button class="btn dummy-btn">Hz %</button>
+                </div>
+                <div id="dial-area" class="dial-area">
+                    <div id="dial" class="dial">
+                        <div class="dial-handle"></div>
+                    </div>
+                    <div class="label" style="--angle: 0deg;"><span><b>OFF</b></span></div>
+                    <div class="label" style="--angle: 40deg;"><span><b>V</b> ~</span></div>
+                    <div class="label" style="--angle: 80deg;"><span><b>V</b> ⎓</span></div>
+                    <div class="label" style="--angle: 120deg;"><span><b>mV</b> ⎓</span></div>
+                    <div class="label" style="--angle: 160deg;"><span><b>Ω</b></span></div>
+                    <div class="label" style="--angle: 200deg;"><span><b>mA</b> ⎓</span></div>
+                    <div class="label" style="--angle: 240deg;"><span><b>A</b> ⎓</span></div>
+                    <div class="label" style="--angle: 280deg;"><span><b>A</b> ~</span></div>
+                    <div class="label" style="--angle: 320deg;"><span><b>mA</b> ~</span></div>
+                </div>
+                <div class="jacks-area">
+                    <div class="jack-group"><span>A</span><div class="jack jack-red"></div></div>
+                    <div class="jack-group"><span>mA μA</span><div class="jack jack-red"></div></div>
+                    <div class="jack-group"><span>COM</span><div class="jack jack-black"></div></div>
+                    <div class="jack-group"><span>VΩ</span><div class="jack jack-red"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schemos dalis -->
+        <div class="circuit-container">
+            <h3>Pasirinkite schemą:</h3>
+            <div class="schema-buttons">
+                <button class="schema-btn active" data-circuit="0">Schema 1 (DC Serijinė)</button>
+                <button class="schema-btn" data-circuit="1">Schema 2 (DC Lygiagreti)</button>
+                <button class="schema-btn" data-circuit="2">Schema 3 (AC Serijinė)</button>
+            </div>
+            <div class="circuit-board">
+                <img id="circuit-img" src="assets/Schem1.jpg" alt="Elektronikos schema">
+
+                <div class="probe-point" id="p-1"></div>
+                <div class="probe-point" id="p-2"></div>
+                <div class="probe-point" id="p-3"></div>
+                <div class="probe-point" id="p-4"></div>
+                <div class="probe-point" id="p-5"></div>
+                <div class="probe-point" id="p-6"></div>
+                <div class="probe-point" id="p-7"></div>
+                <div class="probe-point" id="p-8"></div>
+
+            </div>
+            <p id="measurement-info" class="info-text"></p>
+        </div>
+    </div>
+
+    <div class="author-footer">
+        Virtualus Multimetras | <b>Džiugas Ragauskas EF-24/2</b>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
