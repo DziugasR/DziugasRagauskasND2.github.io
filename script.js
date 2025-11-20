@@ -67,13 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
             seriesPairs: [
                  ['p-1', 'p-3'], 
                  ['p-4', 'p-5'], 
-                 ['p-6', 'p-7'], // R2 -> R3
-                 ['p-8', 'p-2']  // R3 -> Bat
+                 ['p-6', 'p-7'], 
+                 ['p-8', 'p-2']  
             ]
         },
         {
             // SCHEMA 2: DC Parallel
-            // Srovė šakojasi per R1, R2, R3
             id: 1,
             type: 'DC',
             img: 'assets/Schem2.jpg',
@@ -91,21 +90,20 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             components: { R1: 5, R2: 6, R3: 10 },
             get totalResistance() { return 1 / (1/5 + 1/6 + 1/10); }, 
-            // Čia apibrėžiame srovę per šakas (simuliacijai)
             get currents() {
                 return {
-                    total: 10 / this.totalResistance, // ~4.67A
-                    R1: 10 / 5,  // 2.0A
-                    R2: 10 / 6,  // 1.67A
-                    R3: 10 / 10  // 1.0A
+                    total: 10 / this.totalResistance, 
+                    R1: 10 / 5,  
+                    R2: 10 / 6,  
+                    R3: 10 / 10  
                 };
             },
-            // Poros, kurias matuojant rodysime konkrečios šakos srovę (virtualus ampermetras)
+
             branchPairs: {
-                'p-1-p-3': 'total', // Bendra srovė
-                'p-3-p-4': 'R1',    // Srovė per R1
-                'p-5-p-6': 'R2',    // Srovė per R2
-                'p-7-p-8': 'R3'     // Srovė per R3
+                'p-1-p-3': 'total', 
+                'p-3-p-4': 'R1',   
+                'p-5-p-6': 'R2',   
+                'p-7-p-8': 'R3'   
             }
         },
         {
@@ -130,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'p-7': { top: '80%', left: '60%' }, 'p-8': { top: '80%', left: '40%' }
             },
             components: { R1: 100, R2: 500, R3: 400 },
-            get current() { return 10 / (100 + 500 + 400); }, // 0.01A
+            get current() { return 10 / (100 + 500 + 400); }, 
             seriesPairs: [
                 ['p-1', 'p-3'], ['p-4', 'p-5'], ['p-6', 'p-7'], ['p-8', 'p-2']
             ]
@@ -201,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. VARŽA (Ω)
         if (mode.name === 'Ω') {
             let resistance = 0;
-            // Sukuriame porų raktą nepriklausomai nuo tvarkos
+
             const pairKey = [redProbePoint, blackProbePoint].sort().join('-');
 
             // Schema 1 ir 3 (Serijinė)
@@ -221,12 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Schema 2 (Lygiagreti) - Išmanus matavimas
             else if (circuit.id === 1) {
-                // Tikriname, ar zondai uždėti TIKSLIAI ant vieno rezistoriaus kojelių
-                if (pairKey === 'p-3-p-4') resistance = circuit.components.R1;      // R1 tiesiogiai
-                else if (pairKey === 'p-5-p-6') resistance = circuit.components.R2; // R2 tiesiogiai
-                else if (pairKey === 'p-7-p-8') resistance = circuit.components.R3; // R3 tiesiogiai
+                if (pairKey === 'p-3-p-4') resistance = circuit.components.R1;     
+                else if (pairKey === 'p-5-p-6') resistance = circuit.components.R2; 
+                else if (pairKey === 'p-7-p-8') resistance = circuit.components.R3; 
                 else {
-                    // Jei matuojame bendrus taškus (pvz p-1 ir p-2), rodom bendrą varžą
+   
                     if ((nodeRed.name === 'A' && nodeBlack.name === 'D') || (nodeRed.name === 'D' && nodeBlack.name === 'A')) {
                         resistance = circuit.totalResistance;
                     } else {
@@ -245,13 +242,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- Logika Serijinėms Schemoms (1 ir 3) ---
             if (circuit.id === 0 || circuit.id === 2) {
-                // Ieškome, ar pora egzistuoja 'seriesPairs' sąraše ir kokia kryptimi
                 let matchedCurrent = 0;
                 let isReverse = false;
-                
-                // Tikriname teisingą kryptį
+            
                 const forwardMatch = circuit.seriesPairs.find(p => p[0] === redProbePoint && p[1] === blackProbePoint);
-                // Tikriname atvirkščią kryptį
+
                 const reverseMatch = circuit.seriesPairs.find(p => p[1] === redProbePoint && p[0] === blackProbePoint);
 
                 if (forwardMatch) {
@@ -261,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     isReverse = true;
                 }
 
-                // Jei AC - visada teigiama, jei DC - priklauso nuo krypties
                 if (matchedCurrent > 0) {
                     if (mode.type === 'DC' && isReverse) currentA = -matchedCurrent;
                     else currentA = matchedCurrent;
@@ -269,23 +263,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // --- Logika Lygiagrečiai Schemai (2) ---
             else if (circuit.id === 1) {
-                // Sudarome raktą patikrai (nepriklausomai nuo tvarkos pradžiai, kad rastume šaką)
                 const p1 = redProbePoint;
                 const p2 = blackProbePoint;
-                const pairKey = [p1, p2].sort().join('-'); // pvz "p-3-p-4"
+                const pairKey = [p1, p2].sort().join('-'); 
 
-                // Ieškome šakos duomenų
                 const branchName = circuit.branchPairs[pairKey] || circuit.branchPairs[`${p1}-${p2}`] || circuit.branchPairs[`${p2}-${p1}`]; // Backup check
 
                 if (branchName) {
                     let val = circuit.currents[branchName];
-                    // Poliškumo patikra Schemai 2 (laikome, kad srovė teka iš Viršaus į Apačią: p-odd -> p-even)
-                    // Jei Raudonas yra nelyginis (viršus), o Juodas lyginis (apačia) -> Teigiama
+
                     const redIndex = parseInt(redProbePoint.split('-')[1]);
                     const blackIndex = parseInt(blackProbePoint.split('-')[1]);
                     
-                    // Srovė teka iš p-1 į p-2, p-3 į p-4 ir t.t.
-                    // Jei Red < Black (pvz 3 ir 4) -> Teigiama
                     if (redIndex < blackIndex) currentA = val;
                     else currentA = -val;
                     
@@ -304,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return { value: '---', unit: mode.display };
     }
 
-    // --- UI Atnaujinimas ---
+    // --- UI ---
     function updateMultimeterDisplay() {
         const currentMode = modes[currentModeIndex];
         const totalAngle = currentMode.angle + (rotationCount * 360);
@@ -313,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const modeName = currentMode.name;
         const isCurrentMode = modeName.includes('A DC') || modeName.includes('A AC') || modeName.includes('mA');
         
-        // Atnaujintas pranešimas
         if (isCurrentMode) {
             if (circuitsData[activeCircuitIndex].id === 1) {
                 measurementInfo.innerHTML = "<b>Srovė:</b> Lygiagrečioje schemoje matuokite srovę tarp komponento kojelių, kad pamatytumėte srovės pasiskirstymą.";
@@ -418,4 +406,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start
     loadCircuit(0);
+
 });
